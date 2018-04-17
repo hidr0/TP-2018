@@ -1,25 +1,30 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Articles</h1>
+<div class="row">
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
     <% @articles.each do |article| %>
-      <tr>
-        <td><%= link_to 'Show', article %></td>
-        <td><%= link_to 'Edit', edit_article_path(article) %></td>
-        <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+        <h3> <%= link_to article.title, article_path(article) %> </h3>
 
+        <div>
+          <div data-toggle="modal" data-target="#exampleModal">
+          <%= image_tag article.picture, class: "img-fluid"%>
+          </div>
+          <p><%= article.body.first(40) %> ...</p>
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <%= image_tag article.picture, class: "img-fluid"%>
+                <div class= "btn btn-warning"> BUTTON </div>
+              </div>
+            </div>      
+          </div>  
+        </div>
+      </div>
+    <% end %>
+</div>
 <br>
 
 <%= link_to 'New Article', new_article_path %>
