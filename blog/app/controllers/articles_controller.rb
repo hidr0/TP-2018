@@ -43,7 +43,7 @@ class ArticlesController < ApplicationController
   def update
     respond_to do |format|
       if @article.update(article_params)
-        format.js { render :update }
+        # format.js { render :update }
         format.html { redirect_to @article, notice: "Article was successfully updated. Aticle ordered_first = #{@article.ordered_first}" }
         format.json { render :show, status: :ok, location: @article }
       else
@@ -71,7 +71,7 @@ class ArticlesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def article_params
-      # params.fetch(:article, {})
-      params.require(:article).permit(:ordered_first)
+      params.fetch(:article, {})
+      # params.require(:article).permit(:ordered_first)
     end
 end
