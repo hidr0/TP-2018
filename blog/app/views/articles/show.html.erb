@@ -15,5 +15,28 @@
 </div>
 <%= link_to 'Edit', edit_article_path(@article), class: "btn btn-primary btn-sm" %>
 <%= link_to 'Back', articles_path, class: "btn btn-primary" %>
+
 <button type="button" class="btn btn-lg btn-danger" disabled>DESTROY THE WORLD button</button>
+
+<%= button_to "Set first ordered", @article, 
+	remote: true,
+	params: {
+		article: {
+			ordered_first: true
+			}
+		},
+	method: :put,
+	data: {"disable-with": "Saving..."},
+	class: "btn btn-lg btn-success" %>
+	
+	<%= button_to "Unset first ordered", @article, 
+	remote: true,
+	params: {
+		article: {
+			ordered_first: false
+			}
+		},
+	method: :put,
+	data: {"disable-with": "Saving..."},
+	class: "btn btn-lg btn-danger" %>
 </div>

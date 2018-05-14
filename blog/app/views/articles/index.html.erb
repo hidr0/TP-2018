@@ -1,8 +1,16 @@
 <h2>Articles</h2>
 <div class="row">
   <% @articles.each do |article| %>
-  <% order_class = article.id > 40 ? "order-first" : "" %>
-    <div class="col-xl-3 col-lg-4 col-sm-6 col-12 <%= order_class %> mb-4">
+  <% order_class = "" %>
+  
+  <% if article.ordered_first %>
+    <% order_class = "order-first" %>
+  <% else %>
+    <% order_class = article.id == 10 ? "order-first" : order_class %>
+    <% order_class = article.id == 1 ? "order-last" : order_class %>
+  <% end %>  
+    
+    <div class="col-6 mb-4 <%= order_class %>">
       <div class="card p-2">
         <%= link_to article_path(article) do %>
           <h4><%= article.title %></h4>
@@ -12,14 +20,42 @@
           
           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-              <%= image_tag article.picture, class: "img-thumbnail" %>
+              <div style="background-color: white;" class="p-2">
+                <h4><%= article.title %></h4>
+                <%= image_tag article.picture, class: "img-thumbnail" %>
+                <p> <%= article.body %></p>
+              </div>
             </div>
           </div>
            <span data-toggle="modal" data-target="#exampleModal" class="pb-2">
+            
             <%= image_tag article.picture, class: "img-thumbnail" %>
+
           </span>
 
         <p> <%= article.body.first(20) %> ...</p>
+
+        <%= button_to "Set first ordered", article, 
+          remote: true,
+          params: {
+            article: {
+              ordered_first: true
+              }
+            },
+          method: :put,
+          data: {"disable-with": "Saving..."},
+          class: "btn btn-lg btn-success" %>
+                
+        <%= button_to "Unset first ordered", article, 
+          remote: true,
+          params: {
+            article: {
+              ordered_first: false
+              }
+            },
+          method: :put,
+          data: {"disable-with": "Saving..."},
+          class: "btn btn-lg btn-danger" %>
       </div>
     </div>
   <% end %>
