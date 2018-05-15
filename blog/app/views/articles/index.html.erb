@@ -1,29 +1,28 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Articles</h1>
+<h2>Articles</h2>
 <div class="row">
-
-    <% @articles.each do |article| %>
-      <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-        <h3> <%= link_to article.title, article_path(article) %> </h3>
-
-        <div>
-          <div data-toggle="modal" data-target="#exampleModal">
-          <%= image_tag article.picture, class: "img-fluid"%>
-          </div>
-          <p><%= article.body.first(40) %> ...</p>
+  <% @articles.each do |article| %>
+  <% order_class = article.id > 40 ? "order-first" : "" %>
+    <div class="col-xl-3 col-lg-4 col-sm-6 col-12 <%= order_class %> mb-4">
+      <div class="card p-2">
+        <%= link_to article_path(article) do %>
+          <h4><%= article.title %></h4>
+          <% end %>
+          <!-- Button trigger modal -->
+       
+          
           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <%= image_tag article.picture, class: "img-fluid"%>
-                <div class= "btn btn-warning"> BUTTON </div>
-              </div>
-            </div>      
-          </div>  
-        </div>
+              <%= image_tag article.picture, class: "img-thumbnail" %>
+            </div>
+          </div>
+           <span data-toggle="modal" data-target="#exampleModal" class="pb-2">
+            <%= image_tag article.picture, class: "img-thumbnail" %>
+          </span>
+
+        <p> <%= article.body.first(20) %> ...</p>
       </div>
-    <% end %>
+    </div>
+  <% end %>
 </div>
 <br>
 
